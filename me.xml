@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE student PUBLIC "-//Portland State University//DTD CS410J Grade Book//EN" "http://www.cs.pdx.edu/~whitlock/dtds/gradebook.dtd">
+<student enrolled-section="undergraduate">
+<id>chlin</id>
+<firstName>Cheng</firstName>
+<lastName>Lin</lastName>
+<email>chlin@pdx.edu</email>
+<major>CS</major>
+</student>
