@@ -107,26 +107,31 @@ public class Student extends Human {
     if (args.length < 3) {
       System.err.println("Missing command line arguments");
       System.err.println("Usage: Name gender gpa [classA \"class B\" ... ]");
-      System.exit(1);
+//      System.exit(1);
+      return;
     }
 
     if (isNumber(args[0])) {
       System.err.println("Missing name and gender");
-      System.exit(1);
+//      System.exit(1);
+      return;
     }
     if (!isNumber(args[2])) {
       if (Character.isUpperCase(args[0].charAt((0)))) {
         System.err.println("Missing gender");
-        System.exit(1);
+//        System.exit(1);
+        return;
       } else {
         System.err.println("Missing name");
-        System.exit(1);
+//        System.exit(1);
+        return;
       }
     }
 
     if (Character.isUpperCase(args[1].charAt(0))) {
       System.err.println("gender should not be capitalized");
-      System.exit(1);
+//      System.exit(1);
+      return;
     }
 
     if (args.length > 3) {
