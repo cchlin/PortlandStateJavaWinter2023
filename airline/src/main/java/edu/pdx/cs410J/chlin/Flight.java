@@ -3,9 +3,16 @@ package edu.pdx.cs410J.chlin;
 import edu.pdx.cs410J.AbstractFlight;
 
 public class Flight extends AbstractFlight {
+  
+  private int flightNumber;
+
+  public Flight(int flightNumber) {
+    this.flightNumber = flightNumber;
+  }
+
   @Override
   public int getNumber() {
-    return 42;
+    return this.flightNumber;
   }
 
   @Override

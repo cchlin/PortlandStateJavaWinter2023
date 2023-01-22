@@ -19,7 +19,7 @@ public class FlightTest {
    */
   @Test
   void getArrivalStringNeedsToBeImplemented() {
-    Flight flight = new Flight();
+    Flight flight = new Flight(42);
     assertThrows(UnsupportedOperationException.class, flight::getArrivalString);
   }
 
@@ -29,13 +29,13 @@ public class FlightTest {
    */
   @Test
   void initiallyAllFlightsHaveTheSameNumber() {
-    Flight flight = new Flight();
+    Flight flight = new Flight(42);
     assertThat(flight.getNumber(), equalTo(42));
   }
 
   @Test
   void forProject1ItIsOkayIfGetDepartureTimeReturnsNull() {
-    Flight flight = new Flight();
+    Flight flight = new Flight(42);
     assertThat(flight.getDeparture(), is(nullValue()));
   }
   
