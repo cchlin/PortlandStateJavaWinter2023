@@ -20,11 +20,11 @@ public class Airline extends AbstractAirline<Flight> {
 
   @Override
   public void addFlight(Flight flight) {
-    throw new UnsupportedOperationException("This method is not implemented yet");
+    this.flights.add(flight);
   }
 
   @Override
   public Collection<Flight> getFlights() {
-    throw new UnsupportedOperationException("This method is not implemented yet");
+    return flights;
   }
 }
