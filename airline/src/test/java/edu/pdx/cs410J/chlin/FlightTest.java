@@ -19,7 +19,7 @@ public class FlightTest {
    */
   @Test
   void getArrivalStringNeedsToBeImplemented() {
-    Flight flight = new Flight(42);
+    Flight flight = getFlight();
     assertThrows(UnsupportedOperationException.class, flight::getArrivalString);
   }
 
@@ -29,14 +29,39 @@ public class FlightTest {
    */
   @Test
   void initiallyAllFlightsHaveTheSameNumber() {
-    Flight flight = new Flight(42);
-    assertThat(flight.getNumber(), equalTo(42));
+    Flight flight = getFlight();
+    assertThat(flight.getArrivalString(), equalTo("3/15/2023 11:39"));
+  }
+
+  @Test
+  void testGetFlightSource() {
+    Flight flight = getFlight();
+    String source = flight.getSource();
+    assertThat(source, equalTo("PDX"));
+  }
+
+  private static Flight getFlight() {
+    return new Flight(42, "PDX", "3/15/2023 10:39", "SEA", "3/15/2023 11:39");
   }
 
   @Test
   void forProject1ItIsOkayIfGetDepartureTimeReturnsNull() {
-    Flight flight = new Flight(42);
+    Flight flight = getFlight();
     assertThat(flight.getDeparture(), is(nullValue()));
   }
-  
+
+  @Test
+  void testGetDepartureString() {
+    Flight flight = getFlight();
+    String departureString = flight.getDepartureString();
+    assertThat(departureString, equalTo("3/15/2023 10:39"));
+  }
+
+  @Test
+  void testGetFlightDestination() {
+    Flight flight = getFlight();
+    String destination = flight.getDestination();
+    assertThat(destination, equalTo("SEA"));
+  }
+
 }

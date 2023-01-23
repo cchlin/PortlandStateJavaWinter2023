@@ -5,9 +5,17 @@ import edu.pdx.cs410J.AbstractFlight;
 public class Flight extends AbstractFlight {
   
   private int flightNumber;
+  private String source;
+  private String departureTime;
+  private String destination;
+  private String arrivalTime;
 
-  public Flight(int flightNumber) {
+  public Flight(int flightNumber, String source, String departureTime, String destination, String arrivalTime) {
     this.flightNumber = flightNumber;
+    this.source = source;
+    this.departureTime = departureTime;
+    this.destination = destination;
+    this.arrivalTime = arrivalTime;
   }
 
   @Override
@@ -17,21 +25,21 @@ public class Flight extends AbstractFlight {
 
   @Override
   public String getSource() {
-    throw new UnsupportedOperationException("This method is not implemented yet");
+    return this.source;
   }
 
   @Override
   public String getDepartureString() {
-    throw new UnsupportedOperationException("This method is not implemented yet");
+    return this.departureTime;
   }
 
   @Override
   public String getDestination() {
-    throw new UnsupportedOperationException("This method is not implemented yet");
+    return this.destination;
   }
 
   @Override
   public String getArrivalString() {
-    throw new UnsupportedOperationException("This method is not implemented yet");
+    return this.arrivalTime;
   }
 }
