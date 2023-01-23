@@ -20,7 +20,7 @@ public class FlightTest {
   @Test
   void getArrivalStringNeedsToBeImplemented() {
     Flight flight = getFlight();
-    assertThrows(UnsupportedOperationException.class, flight::getArrivalString);
+    assertThat(flight.getArrivalString(), equalTo("3/15/2023 11:39"));
   }
 
   /**
@@ -30,7 +30,7 @@ public class FlightTest {
   @Test
   void initiallyAllFlightsHaveTheSameNumber() {
     Flight flight = getFlight();
-    assertThat(flight.getArrivalString(), equalTo("3/15/2023 11:39"));
+    assertThat(flight.getNumber(), equalTo(42));
   }
 
   @Test
