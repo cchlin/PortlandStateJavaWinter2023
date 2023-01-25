@@ -28,36 +28,55 @@ public class Project1 {
 
   public static void main(String[] args) throws IOException {
     Flight flight = new Flight(42, "PDX", "3/15/2023 10:39", "SEA", "3/15/2023 11:39");  // Refer to one of Dave's classes so that we can be sure it is on the classpath
-    System.err.println("Missing command line arguments");
 
     String[] arguments = new String[8];
     boolean readMe = false;
     boolean print = false;
+    String words = "";
+    boolean isWords = false;
 
 
     int numberOfArguments = 0;
     for (String arg : args) {
-      if (numberOfArguments >= 8)
-        break;
-      else if (arg.equals("-readme") || arg.equals("-README"))
+      if (arg.equals("-readme") || arg.equals("-README"))
         readMe = true;
       else if (arg.equals("-print") || arg.equals("-PRINT"))
         print = true;
       else {
-        arguments[numberOfArguments] = arg;
-        numberOfArguments++;
+        if (arg.charAt(0) == '\"') {
+          words += arg;
+          isWords = true;
+        }
+        else if (arg.charAt(arg.length() - 1) == '\"') {
+          words += arg;
+          isWords = false;
+          if (numberOfArguments < 8)
+            arguments[numberOfArguments] = words;
+          numberOfArguments++;
+        }
+        else {
+          if (!isWords) {
+            if (numberOfArguments < 8)
+              arguments[numberOfArguments] = arg;
+            numberOfArguments++;
+          }
+        }
       }
     }
 
     if (readMe) {
       printReadMe();
     }
-    else if (numberOfArguments >= 8) {
-      System.out.println("Too many arguments");
+    else if (numberOfArguments < 8) {
+      System.err.println("Missing command line arguments");
     }
+    else if (numberOfArguments > 8)
+      System.err.println("Too many arguments");
     else {
-      for (String arg : arguments) {
-        System.out.println(arg);
+      if (print) {
+        for (String arg : arguments) {
+          System.out.println(arg);
+        }
       }
     }
 
