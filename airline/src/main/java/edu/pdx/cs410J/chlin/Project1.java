@@ -1,7 +1,6 @@
 package edu.pdx.cs410J.chlin;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.sun.tools.jconsole.JConsoleContext;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,6 +12,15 @@ import java.io.InputStreamReader;
  */
 public class Project1 {
 
+  /**
+   * methods that checks if the date and time is valid
+   * Example:
+   * 3/15/22 -> false, year should be 4 digits
+   * 4/31/2023 -> false, only 30 days in April
+   * 24:00 -> false, should be 00:00
+   * @param dateAndTime date and time string in MM/DD/YYYY hh:mm
+   * @return true if the date and time are valid, false otherwise.
+   */
   @VisibleForTesting
   static boolean isValidDateAndTime(String dateAndTime) {
     String[] splitDateTime = dateAndTime.split(" ");
@@ -59,22 +67,40 @@ public class Project1 {
     return true;
   }
 
-  static void printReadMe() throws IOException {
+  /**
+   * Read the content of README.txt and return the result
+   * @return content of README.txt file
+   * @throws IOException
+   */
+  static String printReadMe() throws IOException {
+    String result = "";
     try (
       InputStream readme = Project1.class.getResourceAsStream("README.txt")
     ) {
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
       String line = reader.readLine();
-      System.out.println(line);
+      result += line + "\n";
+      while ((line = reader.readLine()) != null) {
+        result += line + "\n";
+      }
     }
+    return result;
   }
 
+  /**
+   * display the usage information of this program
+   */
   static void printUsage() {
     System.err.println("usage: java -jar target/airline-2023.0.0.jar [options] <args>");
     System.err.println("  args order:");
     System.err.println("  airline flightNumber src departDate departTime dest arriveDate arriveTime");
   }
 
+  /**
+   * checks if the argument passed in is integer
+   * @param argument the argument from the command line in string format
+   * @return true if the string argument is integer number, false otherwise
+   */
   static boolean isInt(String argument) {
     try {
       int i = Integer.parseInt(argument);
@@ -84,6 +110,11 @@ public class Project1 {
     return true;
   }
 
+  /**
+   * checks if the argument contains english letter in it
+   * @param argument the string argument that is passed from command line
+   * @return true if the argument contains letter (example: 12a34), false otherwise
+   */
   static boolean containsLetter(String argument) {
     for (int i = 0; i < argument.length(); i++) {
       if (Character.isLetter(argument.charAt(i))) {
@@ -93,6 +124,12 @@ public class Project1 {
     return false;
   }
 
+  /**
+   * checks missing argument and display to user what is missing
+   * also calls isValidDateAndTime to check the date time value
+   * @param arguments An array of command line arguments
+   * @return true if arguments are all correct and if and argument is wrong, returns false
+   */
   static boolean argsNoErrorAndMissing(String[] arguments) {
     // first check missing arguments
     // if the first argument is integer, the airline name is missing
@@ -130,10 +167,10 @@ public class Project1 {
       // then check if the date time is valid
       // check if the departure date and time is valid
     } else if (!isValidDateAndTime(arguments[3] + " " + arguments[4])) {
-      System.err.println("Err: departure date time is not valid");
+      System.err.println("Err: departure date time is not valid -> " + arguments[3] + " " + arguments[4]);
       return false;
     } else if (!isValidDateAndTime(arguments[6] + " " + arguments[7])) {
-      System.err.println("Err: arrival date time is not valid");
+      System.err.println("Err: arrival date time is not valid -> " + arguments[6] + " " + arguments[7]);
       return false;
     }
 
@@ -142,7 +179,6 @@ public class Project1 {
   }
 
   public static void main(String[] args) throws IOException {
-    Flight flight = new Flight(42, "PDX", "3/15/2023 10:39", "SEA", "3/15/2023 11:39");  // Refer to one of Dave's classes so that we can be sure it is on the classpath
 
     // array to store arguments for later use
     String[] arguments = new String[8];
@@ -154,7 +190,7 @@ public class Project1 {
     // process command line arguments
     for (String arg : args) {
       if (arg.equals("-readme") || arg.equals("-README")) {
-        printReadMe();
+        System.out.println(printReadMe());
         return;
       }
       else if (arg.equals("-print") || arg.equals("-PRINT"))
@@ -174,21 +210,40 @@ public class Project1 {
       }
     }
 
+    // message to user
+    // no arguments
     if (numberOfArguments == 0) {
       System.err.println("Missing command line arguments");
+      printUsage();
+      return;
     }
-    else if (numberOfArguments > 8) {
+    // too many arguments
+    if (numberOfArguments > 8) {
       System.err.println("Too many arguments");
       printUsage();
+      return;
     }
-    else if (argsNoErrorAndMissing(arguments)){
-      if (print) {
-        for (String arg : arguments) {
-          System.out.println(arg);
-        }
-      }
+    // missing and error checking
+    if (!argsNoErrorAndMissing(arguments)) {
+      return;
     }
 
+    // if everything is good, goes here and start to add flight and print if the
+    // print option is entered
+    String airlineName = arguments[0];
+    int flightNumber = Integer.parseInt(arguments[1]);
+    String src = arguments[2];
+    String depart = arguments[3] + " " + arguments[4];
+    String dest = arguments[5];
+    String arrive = arguments[6] + " " + arguments[7];
+
+    Airline airline = new Airline(airlineName);
+    Flight flight = new Flight(flightNumber, src, depart, dest, arrive);  // Refer to one of Dave's classes so that we can be sure it is on the classpath
+
+    airline.addFlight(flight);
+
+    if (print) {
+      System.out.println(flight);
+    }
   }
-
 }
