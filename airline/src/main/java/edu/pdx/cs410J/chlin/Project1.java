@@ -29,45 +29,37 @@ public class Project1 {
   public static void main(String[] args) throws IOException {
     Flight flight = new Flight(42, "PDX", "3/15/2023 10:39", "SEA", "3/15/2023 11:39");  // Refer to one of Dave's classes so that we can be sure it is on the classpath
 
+    // array to store arguments for later use
     String[] arguments = new String[8];
-    boolean readMe = false;
+    // print switch indicator
     boolean print = false;
-    String words = "";
-    boolean isWords = false;
-
-
+    // keeps track of how many arguments is entered by user (exclude options
     int numberOfArguments = 0;
+
+    // process command line arguments
     for (String arg : args) {
-      if (arg.equals("-readme") || arg.equals("-README"))
-        readMe = true;
+      if (arg.equals("-readme") || arg.equals("-README")) {
+        printReadMe();
+        return;
+      }
       else if (arg.equals("-print") || arg.equals("-PRINT"))
         print = true;
+      // all other options or options with typo go here
+      else if (arg.charAt(0) == '-') {
+        System.err.println("Error: unknown option: " + arg);
+        System.out.println("Options:");
+        System.out.println("  -print      Prints a description of the entered flight");
+        System.out.println("  -README     Information about the project");
+        return;
+      }
       else {
-        if (arg.charAt(0) == '\"') {
-          words += arg;
-          isWords = true;
-        }
-        else if (arg.charAt(arg.length() - 1) == '\"') {
-          words += arg;
-          isWords = false;
-          if (numberOfArguments < 8)
-            arguments[numberOfArguments] = words;
-          numberOfArguments++;
-        }
-        else {
-          if (!isWords) {
-            if (numberOfArguments < 8)
-              arguments[numberOfArguments] = arg;
-            numberOfArguments++;
-          }
-        }
+        if (numberOfArguments < 8)
+          arguments[numberOfArguments] = arg;
+        numberOfArguments++;
       }
     }
 
-    if (readMe) {
-      printReadMe();
-    }
-    else if (numberOfArguments < 8) {
+    if (numberOfArguments < 8) {
       System.err.println("Missing command line arguments");
     }
     else if (numberOfArguments > 8)
