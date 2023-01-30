@@ -6,11 +6,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 
 /**
  * The main class for the CS410J airline Project
  */
-public class Project1 {
+public class Project2 {
 
   /**
    * methods that checks if the date and time is valid
@@ -75,7 +78,7 @@ public class Project1 {
   static String printReadMe() throws IOException {
     String result = "";
     try (
-      InputStream readme = Project1.class.getResourceAsStream("README.txt")
+      InputStream readme = Project2.class.getResourceAsStream("README.txt")
     ) {
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
       String line = reader.readLine();
@@ -174,8 +177,17 @@ public class Project1 {
       return false;
     }
 
-
     return true;
+  }
+
+  static void writeToFile(File file) {
+    if (file.isDirectory()) {
+      File[] files = file.listFiles();
+      for (int i = 0; i < files.length; i++) {
+        writeToFile(files[i]);
+      }
+    } else
+      System.out.println(file);
   }
 
   public static void main(String[] args) throws IOException {
@@ -186,16 +198,22 @@ public class Project1 {
     boolean print = false;
     // keeps track of how many arguments is entered by user (exclude options
     int numberOfArguments = 0;
+    // indicate if the previous argument is -textFile
+    boolean textFile = false;
+    String file = "";
 
     // process command line arguments
     for (String arg : args) {
-      if (arg.equals("-readme") || arg.equals("-README")) {
+      if (arg.toUpperCase().equals("-README")) {
         System.out.println(printReadMe());
         return;
       }
-      else if (arg.equals("-print") || arg.equals("-PRINT"))
+      else if (arg.toUpperCase().equals("-PRINT"))
         print = true;
       // all other options or options with typo go here
+      else if (arg.toUpperCase().equals("-TEXTFILE")) {
+        textFile = true;
+      }
       else if (arg.charAt(0) == '-') {
         System.err.println("Error: unknown option: " + arg);
         System.err.println("options:");
@@ -204,9 +222,14 @@ public class Project1 {
         return;
       }
       else {
-        if (numberOfArguments < 8)
-          arguments[numberOfArguments] = arg;
-        numberOfArguments++;
+        if (textFile) {
+          file = arg;
+          textFile = false;
+        } else {
+          if (numberOfArguments < 8)
+            arguments[numberOfArguments] = arg;
+          numberOfArguments++;
+        }
       }
     }
 
@@ -245,5 +268,10 @@ public class Project1 {
     if (print) {
       System.out.println(flight);
     }
+
+    // write to file
+    File fileArg = new File(file);
+    writeToFile(fileArg);
+
   }
 }
