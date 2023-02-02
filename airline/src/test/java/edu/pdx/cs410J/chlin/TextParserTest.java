@@ -3,8 +3,8 @@ package edu.pdx.cs410J.chlin;
 import edu.pdx.cs410J.ParserException;
 import org.junit.jupiter.api.Test;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
+
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -20,6 +20,7 @@ public class TextParserTest {
 
     TextParser parser = new TextParser(new InputStreamReader(resource));
     Airline airline = parser.parse();
+
     assertThat(airline.getName(), equalTo("Test Airline"));
   }
 
@@ -30,5 +31,17 @@ public class TextParserTest {
 
     TextParser parser = new TextParser(new InputStreamReader(resource));
     assertThrows(ParserException.class, parser::parse);
+    assertThrows(ParserException.class, parser::parse);
   }
+
+//  @Test
+//  void illFormattedFileThrowException () {
+//    InputStream resource = getClass().getResourceAsStream("valid-airline.txt");
+//    assertThat(resource, notNullValue());
+//
+//    TextParser parser = new TextParser(new InputStreamReader(resource));
+//    assertThrows(ParserException.class, parser::parse);
+
+//  }
+
 }

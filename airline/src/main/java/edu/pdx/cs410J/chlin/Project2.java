@@ -1,14 +1,9 @@
 package edu.pdx.cs410J.chlin;
 
 import com.google.common.annotations.VisibleForTesting;
+import edu.pdx.cs410J.ParserException;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.BufferedWriter;
+import java.io.*;
 
 /**
  * The main class for the CS410J airline Project
@@ -180,14 +175,55 @@ public class Project2 {
     return true;
   }
 
-  static void writeToFile(File file) {
-    if (file.isDirectory()) {
-      File[] files = file.listFiles();
-      for (int i = 0; i < files.length; i++) {
-        writeToFile(files[i]);
+  static Airline readFromFile(File file, String airlineName) {
+    try {
+    // if file exists, retrieve the airline
+      if (file.exists()) {
+        Reader reader = new FileReader(file);
+        TextParser textparser = new TextParser(reader);
+        return textparser.parse();
+        // if the file does not exist, create one and return null airline
+      } else {
+        // get the path of the file object passed in
+        File path  = file.getParentFile();
+        // check if the file contains path
+        if (path != null) {
+          // if the path does not exist, create the path
+          if (!path.exists() && !path.mkdirs()) {
+            throw new IOException("Cannot create directory: " + path);
+          }
+        }
+        if (!file.createNewFile()) {
+          throw new IOException("Cannot create file: " + file);
+        }
       }
-    } else
-      System.out.println(file);
+    } catch (IOException | ParserException ex) {
+      System.err.println("** " + ex);
+    }
+    // if file does not exist, return a new airline instead
+    return new Airline(airlineName);
+  }
+
+  static void writeToFile(File file, String airlineName, Flight flight) {
+    // retrieve the airline, from file
+    // if the file exist, the airline is the one in the file
+    // otherwise it is a newly created airline
+    Airline airline = readFromFile(file, airlineName);
+    // if name of the airline passed in does not match name of the airline
+    // returned by readFromFile(return by textParser)
+    if (!airline.getName().equals(airlineName)) {
+      System.err.println("Airline not found in this file");
+      return;
+    }
+    try {
+      airline.addFlight(flight);
+      Writer writer = new FileWriter(file);
+      TextDumper textDumper = new TextDumper(writer);
+      textDumper.dump(airline);
+    } catch (IOException ex) {
+      System.err.println("** " + ex);
+    }
+
   }
 
   public static void main(String[] args) throws IOException {
@@ -199,20 +235,22 @@ public class Project2 {
     // keeps track of how many arguments is entered by user (exclude options
     int numberOfArguments = 0;
     // indicate if the previous argument is -textFile
+    boolean textFileEnabled = false;
     boolean textFile = false;
     String file = "";
 
     // process command line arguments
     for (String arg : args) {
-      if (arg.toUpperCase().equals("-README")) {
+      if (arg.equalsIgnoreCase("-README")) {
         System.out.println(printReadMe());
         return;
       }
-      else if (arg.toUpperCase().equals("-PRINT"))
+      else if (arg.equalsIgnoreCase("-PRINT"))
         print = true;
       // all other options or options with typo go here
-      else if (arg.toUpperCase().equals("-TEXTFILE")) {
+      else if (arg.equalsIgnoreCase("-TEXTFILE")) {
         textFile = true;
+        textFileEnabled = true;
       }
       else if (arg.charAt(0) == '-') {
         System.err.println("Error: unknown option: " + arg);
@@ -260,18 +298,16 @@ public class Project2 {
     String dest = arguments[5];
     String arrive = arguments[6] + " " + arguments[7];
 
-    Airline airline = new Airline(airlineName);
     Flight flight = new Flight(flightNumber, src, depart, dest, arrive);  // Refer to one of Dave's classes so that we can be sure it is on the classpath
-
-    airline.addFlight(flight);
 
     if (print) {
       System.out.println(flight);
     }
 
     // write to file
-    File fileArg = new File(file);
-    writeToFile(fileArg);
-
+    if (textFileEnabled) {
+      File fileArg = new File(file);
+      writeToFile(fileArg, airlineName, flight);
+    }
   }
 }

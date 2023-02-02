@@ -9,13 +9,17 @@ import java.io.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TextDumperTest {
 
   @Test
-  void airlineNameIsDumpedInTextFormat() {
+  void airlineNameIsDumpedInTextFormat() throws IOException {
     String airlineName = "Test Airline";
     Airline airline = new Airline(airlineName);
+    
+    Flight flight = getFlight();
+    airline.addFlight(flight);
 
     StringWriter sw = new StringWriter();
     TextDumper dumper = new TextDumper(sw);
@@ -25,10 +29,17 @@ public class TextDumperTest {
     assertThat(text, containsString(airlineName));
   }
 
+  private static Flight getFlight() {
+    return new Flight(123, "PDX", "3/13/2023 10:39", "SEA", "3/13/2023 11:39");
+  }
+
   @Test
   void canParseTextWrittenByTextDumper(@TempDir File tempDir) throws IOException, ParserException {
     String airlineName = "Test Airline";
     Airline airline = new Airline(airlineName);
+
+    Flight flight = getFlight();
+    airline.addFlight(flight);
 
     File textFile = new File(tempDir, "airline.txt");
     TextDumper dumper = new TextDumper(new FileWriter(textFile));
@@ -37,5 +48,15 @@ public class TextDumperTest {
     TextParser parser = new TextParser(new FileReader(textFile));
     Airline read = parser.parse();
     assertThat(read.getName(), equalTo(airlineName));
+  }
+
+  @Test
+  void emptyFlightThrownException(@TempDir File tempDir) throws IOException {
+    String airlineName = "Test Airline";
+    Airline airline = new Airline(airlineName);
+
+    File textFile = new File(tempDir, "airline.txt");
+    TextDumper dumper = new TextDumper(new FileWriter(textFile));
+    assertThrows(IOException.class, () -> dumper.dump(airline));
   }
 }
