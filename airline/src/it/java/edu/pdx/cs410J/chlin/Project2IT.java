@@ -54,15 +54,16 @@ class Project2IT extends InvokeMainTestCase {
                 "\n" +
                 "java -jar target/airline-2023.0.0.jar [options] <args>\n" +
                 "  args are (in this order):\n" +
-                "    airline         Airline name\n" +
-                "    flightNumber    The flight number, digits  only\n" +
-                "    src             Three-letter departure airport code \n" +
-                "    depart          Departure date and time (MM/DD/YYYY hh:mm)\n" +
-                "    dest            Three-letter destination airport code\n" +
-                "    arrive          Arrival date and time (MM/DD/YYYY hh:mm)\n" +
+                "    airline          Airline name\n" +
+                "    flightNumber     The flight number, digits  only\n" +
+                "    src              Three-letter departure airport code \n" +
+                "    depart           Departure date and time (MM/DD/YYYY hh:mm)\n" +
+                "    dest             Three-letter destination airport code\n" +
+                "    arrive           Arrival date and time (MM/DD/YYYY hh:mm)\n" +
                 "  list of options:\n" +
-                "    -print     Prints the description of the new flight\n" +
-                "    -README    Prints this README file\n" +
+                "    -print           Prints the description of the new flight\n" +
+                "    -README          Prints this README file\n" +
+                "    -textFile file   Read/write the airline info to the file\n" +
                 "\n" +
                 "Cheng Lin\n" +
                 "chlin@pdx.edu\n\n"));

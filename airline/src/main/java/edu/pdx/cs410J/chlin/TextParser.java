@@ -19,6 +19,17 @@ public class TextParser implements AirlineParser<Airline> {
     this.reader = reader;
   }
 
+  /**
+   * This method will read the content of the file that is set in constructor
+   * and create a new Airline to return. The first line in the file would be
+   * the name of the airline. This method will create a new airline after
+   * the first line is read. Then the following lines would be flight
+   * information. This method will read the flight information and create
+   * new flights to add to the airline before this method returns the
+   * airline.
+   * @return Airline object that is read from the file
+   * @throws ParserException When the airline name is missing or BufferedReader has problem, throw the exception
+   */
   @Override
   public Airline parse() throws ParserException {
     try (

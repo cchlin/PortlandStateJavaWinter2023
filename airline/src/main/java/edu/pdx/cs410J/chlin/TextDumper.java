@@ -11,12 +11,27 @@ import java.util.Collection;
  * A skeletal implementation of the <code>TextDumper</code> class for Project 2.
  */
 public class TextDumper implements AirlineDumper<Airline> {
+
+  /**
+   * The writer private field that is used in dump() method
+   * for the method to write the content of the airline to
+   */
   private final Writer writer;
 
+  /**
+   * constructor of the TextDumper that set the FileWriter to its field
+   * @param writer the FileWriter that specified the file in Project2.java
+   */
   public TextDumper(Writer writer) {
     this.writer = writer;
   }
 
+  /**
+   * This method writes the airline and its flights into the FileWriter specifeid in TextDumper
+   * constructor
+   * @param airline the airline that is to be written
+   * @throws IOException throws exception when the fight is empty, since the usage of this program is to enter airline with a flight
+   */
   @Override
   public void dump(Airline airline) throws IOException {
     try (
