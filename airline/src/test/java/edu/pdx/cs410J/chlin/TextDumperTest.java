@@ -30,7 +30,7 @@ public class TextDumperTest {
   }
 
   private static Flight getFlight() {
-    return new Flight(123, "PDX", "3/13/2023 10:39", "SEA", "3/13/2023 11:39");
+    return new Flight(123, "PDX", "3/13/2023 10:39 PM", "SEA", "3/13/2023 11:39 PM");
   }
 
   @Test

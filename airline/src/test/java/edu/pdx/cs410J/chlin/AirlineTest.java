@@ -28,7 +28,7 @@ public class AirlineTest {
     @Test
     void testAddFlightAndGetFlights() {
         Airline airline = getAirline();
-        Flight flight = new Flight(42, "PDX", "3/15/2023 10:39", "SEA", "3/15/2023 11:39");
+        Flight flight = new Flight(42, "PDX", "3/15/2023 10:39 PM", "SEA", "3/15/2023 11:39 PM");
         airline.addFlight(flight);
         Collection<Flight> c = new ArrayList<>();
         c.add(flight);

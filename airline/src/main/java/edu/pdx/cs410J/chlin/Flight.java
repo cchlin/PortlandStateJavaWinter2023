@@ -2,11 +2,16 @@ package edu.pdx.cs410J.chlin;
 
 import edu.pdx.cs410J.AbstractFlight;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.DateFormat;
+
 /**
  * Flight class that has flight number, departure airport code, departure date and time
  * destination airport code, and arrival date and time
  */
-public class Flight extends AbstractFlight {
+public class Flight extends AbstractFlight implements Comparable<Flight> {
 
   /**
    * Flight number of this flight object
@@ -20,7 +25,7 @@ public class Flight extends AbstractFlight {
    * departure date and time
    * MM/DD/YYYY hh:mm
    */
-  private String departureTime;
+  private Date departureTime;
   /**
    * Three-letter destination airport code
    */
@@ -29,7 +34,7 @@ public class Flight extends AbstractFlight {
    * arrival date and time
    * MM/DD/YYYY hh:mm
    */
-  private String arrivalTime;
+  private Date arrivalTime;
 
   /**
    * flight constructor
@@ -41,10 +46,25 @@ public class Flight extends AbstractFlight {
    */
   public Flight(int flightNumber, String source, String departureTime, String destination, String arrivalTime) {
     this.flightNumber = flightNumber;
-    this.source = source;
-    this.departureTime = departureTime;
-    this.destination = destination;
-    this.arrivalTime = arrivalTime;
+    this.source = source.toUpperCase();
+    DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+    Date departDate = null;
+    try {
+      departDate = df.parse(departureTime);
+    } catch (ParseException ex) {
+      System.err.println("** Bad time: " + departureTime);
+      System.err.println(ex);
+    }
+    this.departureTime = departDate;
+    this.destination = destination.toUpperCase();
+    Date arriveDate = null;
+    try {
+      arriveDate = df.parse(arrivalTime);
+    } catch (ParseException ex) {
+      System.err.println("** Bad time: " + arrivalTime);
+      System.err.println(ex);
+    }
+    this.arrivalTime = arriveDate;
   }
 
   /**
@@ -71,7 +91,10 @@ public class Flight extends AbstractFlight {
    */
   @Override
   public String getDepartureString() {
-    return this.departureTime;
+    StringBuilder sb = new StringBuilder();
+    sb.append(getDate(departureTime)).append(" ").append(getTime(departureTime));
+
+    return sb.toString();
   }
 
   /**
@@ -89,6 +112,41 @@ public class Flight extends AbstractFlight {
    */
   @Override
   public String getArrivalString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(getDate(arrivalTime)).append(" ").append(getTime(arrivalTime));
+
+    return sb.toString();
+  }
+
+  @Override
+  public Date getArrival() {
     return this.arrivalTime;
+  }
+
+  @Override
+  public Date getDeparture() {
+    return this.departureTime;
+  }
+
+  @Override
+  public int compareTo(Flight other) {
+    int result = this.source.compareToIgnoreCase(other.getSource());
+    if (result != 0) {
+      return result;
+    } else {
+      return this.departureTime.compareTo(other.getDeparture());
+    }
+  }
+
+  private String getDate(Date date) {
+    int f = DateFormat.SHORT;
+    DateFormat df = DateFormat.getDateInstance(f);
+    return df.format(date);
+  }
+
+  private String getTime(Date date) {
+    int f = DateFormat.SHORT;
+    DateFormat df = DateFormat.getTimeInstance(f);
+    return df.format(date);
   }
 }

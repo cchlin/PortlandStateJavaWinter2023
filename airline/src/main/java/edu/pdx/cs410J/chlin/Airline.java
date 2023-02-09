@@ -2,6 +2,7 @@ package edu.pdx.cs410J.chlin;
 
 import edu.pdx.cs410J.AbstractAirline;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -42,7 +43,17 @@ public class Airline extends AbstractAirline<Flight> {
    */
   @Override
   public void addFlight(Flight flight) {
-    this.flights.add(flight);
+    List<Flight> lFlights = (List<Flight>) flights;
+    // use as the index
+    int index = 0;
+    int size = lFlights.size();
+    for (int i = 0; i < size; i++) {
+      if (flight.compareTo(lFlights.get(i)) > 0) {
+        index = i + 1;
+      }
+    }
+    lFlights.add(index, flight);
+    this.flights =  lFlights;
   }
 
   /**
