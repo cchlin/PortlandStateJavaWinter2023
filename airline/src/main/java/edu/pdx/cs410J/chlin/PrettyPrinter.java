@@ -70,11 +70,17 @@ public class PrettyPrinter implements AirlineDumper<Airline> {
         Collection<Flight> flights = airline.getFlights();
 
         String format = "%10s %30s %30s";
+        String line8 = "------------";
+        String line30 = "------------------------------";
+        StringBuilder horizontalLine = new StringBuilder();
+        horizontalLine.append(line8).append(line30).append(line30);
 
         String head = String.format(format, "Flight", "From", "To");
         output.add(head);
+        output.add(horizontalLine.toString());
 
         if (!flights.isEmpty()) {
+
             for (Flight flight : flights) {
                 int flightNumber = flight.getNumber();
                 String source = AirportNames.getName(flight.getSource());
@@ -86,7 +92,10 @@ public class PrettyPrinter implements AirlineDumper<Airline> {
                 String hour =String.valueOf(duration / (60 * 60 * 1000));
                 String minute = String.valueOf(duration / (60 * 1000) % 60);
                 StringBuilder travelTime = new StringBuilder();
-                travelTime.append("(").append(hour).append("h");
+                travelTime.append("(");
+                if (Integer.parseInt(hour) != 0) {
+                    travelTime.append(hour).append("h");
+                }
                 if (Integer.parseInt(minute) != 0) {
                     travelTime.append(minute).append("m)");
                 } else {
@@ -97,6 +106,7 @@ public class PrettyPrinter implements AirlineDumper<Airline> {
                 String flightTimeFormatted = String.format(format, travelTime, departTime, arrivalTime);
                 output.add(flightFormatted);
                 output.add(flightTimeFormatted);
+                output.add(horizontalLine.toString());
 
             }
         }

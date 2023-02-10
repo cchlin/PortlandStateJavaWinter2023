@@ -58,7 +58,7 @@ public class Project3 {
     }
 
     // check time
-    if (hh < 0 || 23 < hh) {
+    if (hh < 0 || 12 < hh) {
       return false;
     }
     if (mm < 0 || 59 < mm) {
@@ -131,6 +131,21 @@ public class Project3 {
   }
 
   /**
+   * check if the string contains numbers
+   * @param argument string argument
+   * @return true if the string has numbers in it, false otherwise
+   */
+  static boolean hasInt(String argument) {
+    char[] chars = argument.toCharArray();
+    for (char c : chars) {
+      if (Character.isDigit(c)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * checks missing argument and display to user what is missing
    * also calls isValidDateAndTime to check the date time value
    * @param arguments An array of command line arguments
@@ -140,76 +155,88 @@ public class Project3 {
     // first check missing arguments
     // if the first argument is integer, the airline name is missing
     if (isInt(arguments[0])) {
-      System.err.println("missing: airline name");
+      System.err.println("** missing: airline name");
       return false;
       // if the second argument is null or not integer, flight number is missing
     } else if (arguments[1] == null) {
-      System.err.println("missing: flight number");
+      System.err.println("** missing: flight number");
       return false;
-    } else if (!isInt(arguments[1])) {
-      System.err.println("Flight number should be only numbers");
+    } else if (containsLetter(arguments[1])) {
+      System.err.println("** Flight number should be only numbers: " + arguments[1]);
       return false;
       // if the third argument is null or length > 3 (not airport code) or is integer, departure code is missing
     } else if (arguments[2] == null) {
-      System.err.println("missing: departure airport code");
+      System.err.println("** missing: departure airport code");
       return false;
     } else if (arguments[2].length() != 3) {
-      System.err.println("Departure airport code should be 3 letters only");
+      System.err.println("** Departure airport code should be 3 letters only: " + arguments[2]);
       return false;
-    } else if (isInt(arguments[2])) {
-      System.err.println("Departure airport code should be letters only");
+    } else if (hasInt(arguments[2])) {
+      System.err.println("** Departure airport code should be letters only: " + arguments[2]);
       return false;
       // if the 4th argument is null or contains letters in it, it is not a date, departure date is missing
-    } else if (arguments[3] == null || containsLetter(arguments[3])) {
-      System.err.println("missing: departure date");
+    } else if (arguments[3] == null) {
+      System.err.println("** missing: departure date");
+      return false;
+    } else if (containsLetter(arguments[3])) {
+      System.err.println("** Date should be number: " + arguments[3]);
       return false;
       // if the 5th argument is null or contains letters in it, it is not a time, departure time is missing
-    } else if (arguments[4] == null || containsLetter(arguments[4])) {
-      System.err.println("missing: departure time");
+    } else if (arguments[4] == null) {
+      System.err.println("** missing: departure time");
+      return false;
+    } else if (containsLetter(arguments[4])) {
+      System.err.println("** Time should be number: " + arguments[4]);
       return false;
     } else if (arguments[5] == null) {
-      System.err.println("missing: departure am/pm marker");
+      System.err.println("** missing: departure am/pm marker");
       return false;
-    } else if (isInt(arguments[5])) {
-      System.err.println("The departure am/pm marker should not include integer");
+    } else if (hasInt(arguments[5])) {
+      System.err.println("** The departure am/pm marker should not include integer: " + arguments[5]);
       return false;
     } else if (arguments[5].length() != 2) {
-      System.err.println("The departure am/pm marker should be 2 letters only");
+      System.err.println("** The departure am/pm marker should be 2 letters only: " + arguments[5]);
       return false;
       // if the 6th argument is null or length > 3 (not airport code) or is integer, departure code is missing
     } else if (arguments[6] == null) {
-      System.err.println("missing: arrival airport code");
+      System.err.println("** missing: arrival airport code");
       return false;
     } else if (arguments[6].length() != 3) {
-      System.err.println("Arrival airport code should be 3 letters only");
+      System.err.println("** Arrival airport code should be 3 letters only: " + arguments[6]);
       return false;
-    } else if (isInt(arguments[6])) {
-      System.err.println("Arrival airport code should be letters only");
+    } else if (hasInt(arguments[6])) {
+      System.err.println("** Arrival airport code should be letters only: " + arguments[6]);
       return false;
       // if the 7th argument is null or contains letters in it, it is not a date, arrival date is missing
-    } else if (arguments[7] == null || containsLetter(arguments[7])) {
-      System.err.println("missing: arrival date");
+    } else if (arguments[7] == null) {
+      System.err.println("** missing: arrival date");
+      return false;
+    } else if (containsLetter(arguments[7])) {
+      System.err.println("** Date should be number: " + arguments[7]);
       return false;
       // if the 8th argument is null or contains letters in it, it is not a time, departure time is missing
-    } else if (arguments[8] == null || containsLetter(arguments[8])) {
-      System.err.println("missing: arrival time");
+    } else if (arguments[8] == null) {
+      System.err.println("** missing: arrival time");
+      return false;
+    } else if (containsLetter(arguments[8])) {
+      System.err.println("** Time should be number: " + arguments[8]);
       return false;
     } else if (arguments[9] == null) {
-      System.err.println("missing: arrival am/pm marker");
+      System.err.println("** missing: arrival am/pm marker");
       return false;
-    } else if (isInt(arguments[9])) {
-      System.err.println("The arrival am/pm marker should not include integer");
+    } else if (hasInt(arguments[9])) {
+      System.err.println("** The arrival am/pm marker should not include integer: " + arguments[9]);
       return false;
     } else if (arguments[9].length() != 2) {
-      System.err.println("The arrival am/pm marker should be 2 letters only");
+      System.err.println("** The arrival am/pm marker should be 2 letters only: " + arguments[9]);
       return false;
       // then check if the date time is valid
       // check if the departure date and time is valid
     } else if (!isValidDateAndTime(arguments[3] + " " + arguments[4] + " " + arguments[5])) {
-      System.err.println("Err: departure date time is not valid -> " + arguments[3] + " " + arguments[4] + " " + arguments[5]);
+      System.err.println("** Err: departure date time is not valid -> " + arguments[3] + " " + arguments[4] + " " + arguments[5]);
       return false;
     } else if (!isValidDateAndTime(arguments[7] + " " + arguments[8] + " " + arguments[9])) {
-      System.err.println("Err: arrival date time is not valid -> " + arguments[7] + " " + arguments[8] + " " + arguments[9]);
+      System.err.println("** Err: arrival date time is not valid -> " + arguments[7] + " " + arguments[8] + " " + arguments[9]);
       return false;
     }
 
@@ -245,11 +272,7 @@ public class Project3 {
     return new Airline(airlineName);
   }
 
-  static void writeToFile(File file, String airlineName, Flight flight) {
-    // retrieve the airline, from file
-    // if the file exist, the airline is the one in the file
-    // otherwise it is a newly created airline
-    Airline airline = readFromFile(file, airlineName);
+  static void writeToFile(File file, String airlineName, Airline airline) {
     // if name of the airline passed in does not match name of the airline
     // returned by readFromFile(return by textParser)
     if (!airline.getName().equals(airlineName)) {
@@ -257,7 +280,6 @@ public class Project3 {
       return;
     }
     try {
-      airline.addFlight(flight);
       Writer writer = new FileWriter(file);
       TextDumper textDumper = new TextDumper(writer);
       textDumper.dump(airline);
@@ -269,7 +291,6 @@ public class Project3 {
   static boolean validFileNameFormat(String fileName) {
     String[] splitFileName = fileName.split("\\.");
     if (splitFileName.length == 1) {
-      System.err.println("** Bad file name: " + fileName);
       return false;
     }
     return true;
@@ -294,59 +315,68 @@ public class Project3 {
     boolean pretty = false;
     boolean prettyConsole = false;
     String prettyFile = "";
+    String prev = "";
+    String prevPrev = "";
 
-    int size = args.length;
     for (String arg : args) {
       // process command line arguments
-        if (arg.equalsIgnoreCase("-README")) {
-          System.out.println(printReadMe());
+      if (arg.equalsIgnoreCase("-README")) {
+        System.out.println(printReadMe());
+        return;
+      } else if (arg.equalsIgnoreCase("-PRINT")) {
+        print = true;
+      }
+      // all other options or options with typo go here
+      else if (arg.equalsIgnoreCase("-TEXTFILE")) {
+        textFile = true;
+        textFileEnabled = true;
+      } else if (arg.equalsIgnoreCase("-PRETTY")) {
+        pretty = true;
+        prettyEnabled = true;
+        // when pretty is false, the previous argument is not -pretty flag
+        // so when the argument is "-", whether it is not the flags defined
+        // or it is the "-" for pretty print that is to output to console
+      } else if (!pretty && arg.charAt(0) == '-') {
+        // if prettyEnabled is true and prettyFile is not empty, and
+        if (prevPrev.compareToIgnoreCase("-PRETTY") == 0) {
+          prettyConsole = true;
+        } else {
+          System.err.println("Error: unknown option: " + arg);
+          System.err.println("options:");
+          System.err.println("  -print           Prints a description of the entered flight");
+          System.err.println("  -README          Information about the project");
+          System.err.println("  -textFile file   Read/write the airline info to the file");
+          System.err.println("  -pretty file/-   write the pretty format to file/command line or (file -) do both");
           return;
-        } else if (arg.equalsIgnoreCase("-PRINT")) {
-          print = true;
         }
-        // all other options or options with typo go here
-        else if (arg.equalsIgnoreCase("-TEXTFILE")) {
-          textFile = true;
-          textFileEnabled = true;
-        } else if (arg.equalsIgnoreCase("-PRETTY")) {
-          pretty = true;
-          prettyEnabled = true;
-        } else if (!pretty && arg.charAt(0) == '-') {
-          if (prettyEnabled && prettyFile.length() != 0 && !prettyConsole) {
-            prettyConsole = true;
-          } else {
-            System.err.println("Error: unknown option: " + arg);
-            System.err.println("options:");
-            System.err.println("  -print           Prints a description of the entered flight");
-            System.err.println("  -README          Information about the project");
-            System.err.println("  -textFile file   Read/write the airline info to the file");
-            System.err.println("  -pretty file/-   write the pretty format to file/command line");
+      } else {
+        if (textFile) {
+          if (!validFileNameFormat(arg)) {
+            System.err.println("** Bad file name: " + arg);
             return;
           }
-        } else {
-          if (textFile) {
+          file = arg;
+          textFile = false;
+        } else if (pretty) {
+          if (arg.compareTo("-") != 0) {
             if (!validFileNameFormat(arg)) {
+              System.err.println("** Bad file name: " + arg);
               return;
             }
-            file = arg;
-            textFile = false;
-          } else if (pretty) {
-            if (arg.compareTo("-") != 0) {
-              if (!validFileNameFormat(arg)) {
-                return;
-              }
-            }
-            if (arg.compareTo("-") == 0) {
-              prettyConsole = true;
-            }
-            prettyFile = arg;
-            pretty = false;
-          } else {
-            if (numberOfArguments < 10)
-              arguments[numberOfArguments] = arg;
-            numberOfArguments++;
           }
+          if (arg.compareTo("-") == 0) {
+            prettyConsole = true;
+          }
+          prettyFile = arg;
+          pretty = false;
+        } else {
+          if (numberOfArguments < 10)
+            arguments[numberOfArguments] = arg;
+          numberOfArguments++;
         }
+      }
+        prevPrev = prev;
+        prev = arg;
     }
 
     // message to user
@@ -378,7 +408,23 @@ public class Project3 {
     String arrive = arguments[7] + " " + arguments[8] + " " + arguments[9];
 
     Airline airline = new Airline(airlineName);
+
+
     Flight flight = new Flight(flightNumber, src, depart, dest, arrive);
+    if (!flight.airportCodeIsLegit(src)) {
+      System.err.println("** Source airport code does not exist: " + src);
+      return;
+    }
+    if (!flight.airportCodeIsLegit(dest)) {
+      System.err.println("** Destination airport code does not exist: " + dest);
+      return;
+    }
+    if (!flight.departureTimeIsEarlier())  {
+      System.err.println("** Arrival time is earlier than departure time");
+      System.err.println("**   Departure: " + depart);
+      System.err.println("**   Arrival  : " + arrive);
+      return;
+    }
 
     if (print) {
       System.out.println(flight);
@@ -387,28 +433,33 @@ public class Project3 {
     // write to file
     if (textFileEnabled) {
       File fileArg = new File(file);
-      writeToFile(fileArg, airlineName, flight);
+      airline = readFromFile(fileArg, airlineName);
+      airline.addFlight(flight);
+      writeToFile(fileArg, airlineName, airline);
     }
 
+    // if -pretty is entered
     if (prettyEnabled) {
-      if (textFileEnabled) {
-        File tFile = new File(file);
-        airline = readFromFile(tFile, airlineName);
+      // if -textFile is entered airline and flight will have been processed
+      // so if it is not enabled we will need to add the flight in here
+      if (!textFileEnabled) {
+        airline.addFlight(flight);
       }
-      airline.addFlight(flight);
+      // if "-" print to console is entered, perform System.out.println
       if (prettyConsole) {
           PrettyPrinter pp = new PrettyPrinter();
           ArrayList<String> output = pp.formatOutput(airline);
           output.forEach(System.out::println);
       }
-       if (prettyFile.charAt(0) != 0) {
+      // if prettyFile String is not empty, the file name is presented
+       if (prettyFile.compareTo("-") != 0) {
         File pFile = new File(prettyFile);
         try {
           Writer writer = new FileWriter(pFile);
           PrettyPrinter pp = new PrettyPrinter(writer);
           pp.dump(airline);
         } catch (IOException ex) {
-          System.err.println("** " + ex);
+          System.err.println("** Pretty file not found");
         }
       }
     }

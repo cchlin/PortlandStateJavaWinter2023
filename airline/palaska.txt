@@ -1,28 +1,6 @@
-Alaska Airline with 13 flights
-  Flight                           From                             To
-      26                    Seattle, WA                   Portland, OR
-(8856h51m)               3/11/22 10:39 PM               3/15/23 11:30 PM
-      26                    Seattle, WA                   Portland, OR
-(8856h51m)               3/11/22 10:39 PM               3/15/23 11:30 PM
-      26                    Seattle, WA                   Portland, OR
-(8820h51m)               3/13/22 10:39 AM               3/15/23 11:30 PM
-      26                    Seattle, WA                   Portland, OR
-(8820h51m)               3/13/22 10:39 AM               3/15/23 11:30 PM
-      26                    Seattle, WA                   Portland, OR
-(8820h51m)               3/13/22 10:39 AM               3/15/23 11:30 PM
-      26                    Seattle, WA                   Portland, OR
-(8820h51m)               3/13/22 10:39 AM               3/15/23 11:30 PM
-      26                    Seattle, WA                   Portland, OR
-(8820h51m)               3/13/22 10:39 AM               3/15/23 11:30 PM
-      26                    Seattle, WA                   Portland, OR
-(8820h51m)               3/13/22 10:39 AM               3/15/23 11:30 PM
-      26                    Seattle, WA                   Portland, OR
-(8808h51m)               3/13/22 10:39 PM               3/15/23 11:30 PM
-      26                    Seattle, WA                   Portland, OR
-(8808h51m)               3/13/22 10:39 PM               3/15/23 11:30 PM
-      26                    Seattle, WA                   Portland, OR
-(8760h51m)               3/15/22 10:39 PM               3/15/23 11:30 PM
-      26                    Seattle, WA                   Portland, OR
-(8760h51m)               3/15/22 10:39 PM               3/15/23 11:30 PM
-      26                    Seattle, WA                   Portland, OR
-(8855h51m)               3/11/22 10:39 PM               3/15/23 11:30 PM
+Alaska Airline with 1 flights
+    Flight                           From                             To
+------------------------------------------------------------------------
+        23                 Taipei, Taiwan                    Seattle, WA
+  (13h53m)               3/12/23 10:36 PM               3/13/23 12:29 PM
+------------------------------------------------------------------------

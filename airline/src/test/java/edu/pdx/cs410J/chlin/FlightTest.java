@@ -1,11 +1,14 @@
 package edu.pdx.cs410J.chlin;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestTemplate;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -114,9 +117,9 @@ public class FlightTest {
   @Test
   void testFlightCompareToDifferentSource() {
     Flight flight1 = getFlight();
-    Flight flight2 = new Flight(42, "pex", "3/15/2023 10:36 PM", "SEA", "3/15/2023 11:39 PM");
+    Flight flight2 = new Flight(42, "NRT", "3/15/2023 10:36 PM", "SEA", "3/15/2023 11:39 PM");
     int result = flight1.compareTo(flight2);
-    assertTrue(result < 0);
+    assertTrue(result > 0);
   }
   @Test
   void testFlightCompareToSameSourceDifferentDepartureTime() {
@@ -132,6 +135,27 @@ public class FlightTest {
     Flight flight2 = new Flight(42, "PDX", "3/15/2023 10:36 PM", "SEA", "3/15/2023 11:39 PM");
     int result = flight1.compareTo(flight2);
     assertTrue(result == 0);
+  }
+
+  @Test
+  void testAirportCodeNotLegit() {
+    Flight flight2 = new Flight(42, "ZZZ", "3/15/2023 10:36 PM", "SEA", "3/15/2023 11:39 PM");
+   assertFalse(flight2.airportCodeIsLegit(flight2.getSource()));
+  }
+
+  @Test
+  public void testInvalidDepartureTime() {
+    ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    System.setErr(new PrintStream(outContent));
+    Flight flight = new Flight(1, "NYC", "3/16/XXXX 10:36 PM", "LAX", "3/16/2023 11:36 PM");
+    assertEquals("** Bad departure time: 3/16/XXXX 10:36 PM\n", outContent.toString());
+  }
+  @Test
+  public void testInvalidArrivalTime() {
+    ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    System.setErr(new PrintStream(outContent));
+    Flight flight = new Flight(1, "NYC", "3/16/2023 10:36 PM", "LAX", "3/XX/2023 11:36 PM");
+    assertEquals("** Bad arrival time: 3/XX/2023 11:36 PM\n", outContent.toString());
   }
 
 }

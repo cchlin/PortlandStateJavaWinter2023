@@ -59,7 +59,9 @@ public class TextParser implements AirlineParser<Airline> {
         String destination = st.nextToken();
         String arrivalTime = st.nextToken();
 
-        airline.addFlight(new Flight(flightNumber, source, departureTime, destination, arrivalTime));
+        Flight f = new Flight(flightNumber, source, departureTime, destination, arrivalTime);
+
+        airline.addFlight(f);
 
         flight = br.readLine();
       }

@@ -39,7 +39,7 @@ public class Airline extends AbstractAirline<Flight> {
 
   /**
    * Add one flight into the flight list
-   * @param flight A flight objecct
+   * @param flight A flight object
    */
   @Override
   public void addFlight(Flight flight) {
