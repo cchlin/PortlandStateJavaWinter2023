@@ -20,7 +20,7 @@ public class PrettyPrinter implements AirlineDumper<Airline> {
 
     /**
      * Constructor of the PrettyPrinter that set the FileWriter to its field
-     * @param writer the FileWriter that specified the file in Project3.java
+     * @param writer the FileWriter that specified the file in Project4.java
      */
     public PrettyPrinter(Writer writer) {
         this.writer = writer;
@@ -89,18 +89,9 @@ public class PrettyPrinter implements AirlineDumper<Airline> {
                 String arrivalTime = flight.getArrivalString();
 
                 long duration = flight.getArrival().getTime() - flight.getDeparture().getTime();
-                String hour =String.valueOf(duration / (60 * 60 * 1000));
-                String minute = String.valueOf(duration / (60 * 1000) % 60);
+                String minute = String.valueOf(duration / (60 * 1000));
                 StringBuilder travelTime = new StringBuilder();
-                travelTime.append("(");
-                if (Integer.parseInt(hour) != 0) {
-                    travelTime.append(hour).append("h");
-                }
-                if (Integer.parseInt(minute) != 0) {
-                    travelTime.append(minute).append("m)");
-                } else {
-                    travelTime.append(")");
-                }
+                travelTime.append("(").append(minute).append("m)");
 
                 String flightFormatted = String.format(format, flightNumber, source, dest);
                 String flightTimeFormatted = String.format(format, travelTime, departTime, arrivalTime);

@@ -20,7 +20,7 @@ public class TextDumper implements AirlineDumper<Airline> {
 
   /**
    * constructor of the TextDumper that set the FileWriter to its field
-   * @param writer the FileWriter that specified the file in Project2.java
+   * @param writer the FileWriter that specified the file in Project4.java
    */
   public TextDumper(Writer writer) {
     this.writer = writer;

@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE airline SYSTEM "http://www.cs.pdx.edu/~whitlock/dtds/airline.dtd">
+<airline>
+    <name>Alaska Airline</name>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>321</number>
+        <src>PDX</src>
+        <depart>
+            <date day="15" month="3" year="23"/>
+            <time hour="22" minute="36"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="15" month="3" year="23"/>
+            <time hour="23" minute="36"/>
+        </arrive>
+    </flight>
+</airline>

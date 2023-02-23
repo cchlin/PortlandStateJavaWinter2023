@@ -4,12 +4,13 @@ import com.google.common.annotations.VisibleForTesting;
 import edu.pdx.cs410J.ParserException;
 
 import java.io.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
  * The main class for the CS410J airline Project
  */
-public class Project3 {
+public class Project4 {
 
   /**
    * methods that checks if the date and time is valid
@@ -81,7 +82,7 @@ public class Project3 {
   static String printReadMe() throws IOException {
     String result = "";
     try (
-      InputStream readme = Project3.class.getResourceAsStream("README.txt")
+      InputStream readme = Project4.class.getResourceAsStream("README.txt")
     ) {
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
       String line = reader.readLine();
@@ -288,6 +289,59 @@ public class Project3 {
     }
   }
 
+  static Airline xmlRead(File file, String airlineName) {
+    try {
+      // if file exists, retrieve the airline
+      if (file.exists()) {
+        InputStream is = new FileInputStream(file);
+        XmlParser xp = new XmlParser(is);
+        return xp.parse();
+        // if the file does not exist, create one and return new airline
+      } else {
+        // get the path of the file object passed in
+        File path = file.getParentFile();
+        // check if the file contains path
+        if (path != null) {
+          if (!path.exists() && !path.mkdirs()) {
+            System.err.println("Cannot create directory:" + path);
+          }
+        }
+        if (!file.createNewFile()) {
+          throw new IOException("Cannot create file: " + file);
+        }
+      }
+    } catch (FileNotFoundException ex) {
+      System.err.println("File not found");
+    } catch (ParserException ex)  {
+      System.err.println("An error occurred while parsing the airline XML data");
+    } catch (IOException ex) {
+      System.err.println("Cannot create file: " + file);
+    }
+
+    return new Airline(airlineName);
+  }
+
+  static void xmlWrite(File file, String airlineName, Airline airline) {
+    // if the name of the airline passed in does not match the name of the airline
+    // returned by xmlRead
+    if (!airline.getName().equals(airlineName)) {
+      System.err.println("Airline not found in this file");
+      return;
+    }
+    try {
+      Writer writer = new FileWriter(file);
+      XmlDumper xd = new XmlDumper(writer);
+      xd.dump(airline);
+    } catch (IOException ex) {
+      System.err.println("** " + ex);
+    }
+  }
+
+  /**
+   * Chekc if the file name is valid
+   * @param fileName file name
+   * @return true if it's a valid file name, false otherwise
+   */
   static boolean validFileNameFormat(String fileName) {
     String[] splitFileName = fileName.split("\\.");
     if (splitFileName.length == 1) {
@@ -295,6 +349,7 @@ public class Project3 {
     }
     return true;
   }
+
 
   public static void main(String[] args) throws IOException {
 
@@ -317,6 +372,11 @@ public class Project3 {
     String prettyFile = "";
     String prev = "";
     String prevPrev = "";
+    // indicate xmlFile option is entered
+    boolean xmlEnabled = false;
+    boolean xmlFile = false;
+    String xmlFileName = "";
+
 
     for (String arg : args) {
       // process command line arguments
@@ -330,6 +390,9 @@ public class Project3 {
       else if (arg.equalsIgnoreCase("-TEXTFILE")) {
         textFile = true;
         textFileEnabled = true;
+      } else if (arg.equalsIgnoreCase("-XMLFILE")) {
+        xmlFile = true;
+        xmlEnabled = true;
       } else if (arg.equalsIgnoreCase("-PRETTY")) {
         pretty = true;
         prettyEnabled = true;
@@ -346,17 +409,25 @@ public class Project3 {
           System.err.println("  -print           Prints a description of the entered flight");
           System.err.println("  -README          Information about the project");
           System.err.println("  -textFile file   Read/write the airline info to the file");
+          System.err.println("  -xmlFile file    Read/write the airline info to xml file");
           System.err.println("  -pretty file/-   write the pretty format to file/command line or (file -) do both");
           return;
         }
       } else {
         if (textFile) {
           if (!validFileNameFormat(arg)) {
-            System.err.println("** Bad file name: " + arg);
+            System.err.println("** Bad text file name: " + arg);
             return;
           }
           file = arg;
           textFile = false;
+        } else if (xmlFile) {
+          if (!validFileNameFormat(arg)) {
+            System.err.println("** Bad xml file name:" + arg);
+            return;
+          }
+          xmlFileName = arg;
+          xmlFile = false;
         } else if (pretty) {
           if (arg.compareTo("-") != 0) {
             if (!validFileNameFormat(arg)) {
@@ -377,6 +448,12 @@ public class Project3 {
       }
         prevPrev = prev;
         prev = arg;
+    }
+
+    // if -textFile and -xmlFile both present, return
+    if (textFileEnabled && xmlEnabled) {
+      System.err.println("** -textFile and -xmlFile option cannot be used at the same time");
+      return;
     }
 
     // message to user
@@ -438,11 +515,20 @@ public class Project3 {
       writeToFile(fileArg, airlineName, airline);
     }
 
+
+    // xml
+    if (xmlEnabled) {
+      File xFile = new File(xmlFileName);
+      airline = xmlRead(xFile, airlineName);
+      airline.addFlight(flight);
+      xmlWrite(xFile, airlineName, airline);
+    }
+
     // if -pretty is entered
     if (prettyEnabled) {
       // if -textFile is entered airline and flight will have been processed
       // so if it is not enabled we will need to add the flight in here
-      if (!textFileEnabled) {
+      if (!textFileEnabled && !xmlEnabled) {
         airline.addFlight(flight);
       }
       // if "-" print to console is entered, perform System.out.println

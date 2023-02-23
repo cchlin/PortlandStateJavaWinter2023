@@ -62,7 +62,7 @@ public class PrettyPrinterTest {
         String head = String.format(format, "Flight", "From", "To");
         String hori = horizontalLine.toString();
         String line1 = String.format(format, 41, "Portland, OR", "Seattle, WA");
-        String line2 = String.format(format, "(1h3m)", "3/15/23 10:36 PM", "3/15/23 11:39 PM");
+        String line2 = String.format(format, "(63m)", "3/15/23 10:36 PM", "3/15/23 11:39 PM");
 
         BufferedReader br = new BufferedReader(new FileReader(textFile));
         String[] lines = new String[5];

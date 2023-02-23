@@ -14,6 +14,7 @@ java -jar target/airline-2023.0.0.jar [options] <args>
     -print           Prints the description of the new flight
     -README          Prints this README file
     -textFile file   Read/write the airline info to the file
+    -xmlFile file    Read/write the airline info to xml file
     -pretty file/-   write the pretty format to file/command line or (file - ) do both
 
 Cheng Lin
