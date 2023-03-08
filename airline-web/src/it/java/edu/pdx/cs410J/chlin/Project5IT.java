@@ -64,28 +64,32 @@ class Project5IT extends InvokeMainTestCase {
     @Disabled
     @Test
     void test4AddDefinition() {
-        String word = "WORD";
-        String definition = "DEFINITION";
+        String airlineName = "Fake Airline";
+        String flightNumber = "123";
+        String src = "SEA";
+        String depart = "3/7/2023 10:36 AM";
+        String dest = "PDX";
+        String arrive = "3/7/2023 11:39 AM";
 
-        MainMethodResult result = invokeMain( Project5.class, HOSTNAME, PORT, word, definition );
+        MainMethodResult result = invokeMain( Project5.class, HOSTNAME, PORT, airlineName, flightNumber );
 
         assertThat(result.getTextWrittenToStandardError(), equalTo(""));
 
         String out = result.getTextWrittenToStandardOut();
-        assertThat(out, out, containsString(Messages.definedWordAs(word, definition)));
+        assertThat(out, out, containsString(Messages.addFlightMessage(airlineName, flightNumber, src, depart, dest, arrive)));
 
-        result = invokeMain( Project5.class, HOSTNAME, PORT, word );
+        result = invokeMain( Project5.class, HOSTNAME, PORT, airlineName );
 
         assertThat(result.getTextWrittenToStandardError(), equalTo(""));
 
         out = result.getTextWrittenToStandardOut();
-        assertThat(out, out, containsString(PrettyPrinter.formatDictionaryEntry(word, definition)));
+        assertThat(out, out, containsString(PrettyPrinter.formatDictionaryEntry(airlineName, flightNumber)));
 
         result = invokeMain( Project5.class, HOSTNAME, PORT );
 
         assertThat(result.getTextWrittenToStandardError(), equalTo(""));
 
         out = result.getTextWrittenToStandardOut();
-        assertThat(out, out, containsString(PrettyPrinter.formatDictionaryEntry(word, definition)));
+        assertThat(out, out, containsString(PrettyPrinter.formatDictionaryEntry(airlineName, flightNumber)));
     }
 }

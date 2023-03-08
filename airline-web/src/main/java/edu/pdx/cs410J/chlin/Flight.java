@@ -66,6 +66,14 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
     this.arrivalTime = arriveDate;
   }
 
+  public Flight(Flight flight) {
+    this.flightNumber = flight.getNumber();
+    this.source = flight.getSource();
+    this.departureTime = flight.getDeparture();
+    this.destination = flight.getDestination();
+    this.arrivalTime = flight.getArrival();
+  }
+
   /**
    * get the flight number
    * @return flight number

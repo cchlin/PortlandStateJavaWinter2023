@@ -2,11 +2,14 @@ package edu.pdx.cs410J.chlin;
 
 import com.google.common.annotations.VisibleForTesting;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,12 +38,14 @@ public class AirlineServlet extends HttpServlet {
   @Override
   protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws IOException
   {
-      response.setContentType( "text/plain" );
+      response.setContentType( "text/xml" );
 
-      String word = getParameter(AIRLINE_NAME_PARAMETER, request );
-      if (word != null) {
-          writeDefinition(word, response);
+      String airlineName = getParameter(AIRLINE_NAME_PARAMETER, request );
+      String src = getParameter(SRC_PARAMETER, request);
+      String dest = getParameter(DEST_PARAMETER, request);
 
+      if (src != null && dest != null) {
+          getFlightsWithSrcAndDest(airlineName, src, dest, response);
       } else {
           writeAllDictionaryEntries(response);
       }
@@ -102,14 +107,14 @@ public class AirlineServlet extends HttpServlet {
       Airline airline = this.airlines.get(airlineName);
       if (airline == null) {
           airline = new Airline(airlineName);
-          this.airlines.put(airlineName, airline);
       }
 
       airline.addFlight(new Flight(flightNumber, src, depart, dest, arrive));
+      this.airlines.put(airlineName, airline);
 
-      PrintWriter pw = response.getWriter();
-      pw.println(Messages.definedWordAs(airlineName, flightNumberAsString));
-      pw.flush();
+//      PrintWriter pw = response.getWriter();
+//      pw.println(Messages.addFlightMessage(airlineName, flightNumberAsString, src, depart, dest, arrive));
+//      pw.flush();
 
       response.setStatus( HttpServletResponse.SC_OK);
   }
@@ -121,12 +126,12 @@ public class AirlineServlet extends HttpServlet {
    */
   @Override
   protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      response.setContentType("text/plain");
+      response.setContentType("application/plain");
 
       this.airlines.clear();
 
       PrintWriter pw = response.getWriter();
-      pw.println(Messages.allDictionaryEntriesDeleted());
+      pw.println(Messages.allAirlinesDeleted());
       pw.flush();
 
       response.setStatus(HttpServletResponse.SC_OK);
@@ -150,21 +155,27 @@ public class AirlineServlet extends HttpServlet {
    *
    * The text of the message is formatted with {@link TextDumper}
    */
-  private void writeDefinition(String word, HttpServletResponse response) throws IOException {
-    Airline airline = this.airlines.get(word);
+  private void getFlightsWithSrcAndDest(String airlineName, String src, String dest, HttpServletResponse response) throws IOException {
+    Airline airline = this.airlines.get(airlineName);
+    Airline airlineToReturn = new Airline(airlineName);
 
     if (airline == null) {
       response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
     } else {
-      PrintWriter pw = response.getWriter();
-      TextDumper dumper = new TextDumper(pw);
-      dumper.dump(airline);
-      pw.flush();
-
-//      Map<String, Airline> wordDefinition = Map.of(word, airline);
-//      TextDumper dumper = new TextDumper(pw);
-//      dumper.dump(wordDefinition);
+        Collection<Flight> flights = airline.getFlights();
+        String flightSrc = "";
+        String flightDest = "";
+        for (Flight flight : flights) {
+            flightSrc = flight.getSource();
+            flightDest = flight.getDestination();
+            if (flightSrc.equals(src) && flightDest.equals(dest)) {
+                airlineToReturn.addFlight(new Flight(flight));
+            }
+        }
+        PrintWriter pw = response.getWriter();
+        XmlDumper dumper = new XmlDumper(pw);
+        dumper.dump(airlineToReturn);
+        pw.flush();
 
       response.setStatus(HttpServletResponse.SC_OK);
     }
