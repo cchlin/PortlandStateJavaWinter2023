@@ -158,8 +158,11 @@ public class AirlineServlet extends HttpServlet {
 
     } else {
       PrintWriter pw = response.getWriter();
+      TextDumper dumper = new TextDumper(pw);
+      dumper.dump(airline);
+      pw.flush();
 
-      Map<String, Airline> wordDefinition = Map.of(word, airline);
+//      Map<String, Airline> wordDefinition = Map.of(word, airline);
 //      TextDumper dumper = new TextDumper(pw);
 //      dumper.dump(wordDefinition);
 

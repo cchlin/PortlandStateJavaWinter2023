@@ -14,16 +14,26 @@ import static org.hamcrest.Matchers.equalTo;
 public class TextDumperParserTest {
 
   @Test
-  void emptyMapCanBeDumpedAndParsed() throws ParserException {
-    Map<String, String> map = Collections.emptyMap();
-    Map<String, String> read = dumpAndParse(map);
-    assertThat(read, equalTo(map));
+  void airlineWithOneFlightCanBeDumpedAndParsed() throws ParserException {
+    String airlineName = "Airline";
+    int flightNumberInt = 123;
+    String flightNumber = "123";
+    String src = "SEA";
+    String depart = "3/7/2023 10:36 AM";
+    String dest = "PDX";
+    String arrive = "3/7/2023 11:39 AM";
+    Airline airline = new Airline(airlineName);
+    airline.addFlight(new Flight(flightNumberInt, src, depart, dest, arrive));
+
+    Airline read = dumpAndParse(airline);
+    assertThat(read.getName(), equalTo(airlineName));
+    assertThat(read.getFlights().iterator().next().getNumber(), equalTo(flightNumberInt));
   }
 
-  private Map<String, String> dumpAndParse(Map<String, String> map) throws ParserException {
+  private Airline dumpAndParse(Airline airline) throws ParserException {
     StringWriter sw = new StringWriter();
     TextDumper dumper = new TextDumper(sw);
-    dumper.dump(map);
+    dumper.dump(airline);
 
     String text = sw.toString();
 
@@ -31,10 +41,10 @@ public class TextDumperParserTest {
     return parser.parse();
   }
 
-  @Test
-  void dumpedTextCanBeParsed() throws ParserException {
-    Map<String, String> map = Map.of("one", "1", "two", "2");
-    Map<String, String> read = dumpAndParse(map);
-    assertThat(read, equalTo(map));
-  }
+//  @Test
+//  void dumpedTextCanBeParsed() throws ParserException {
+//    Map<String, String> map = Map.of("one", "1", "two", "2");
+//    Map<String, String> read = dumpAndParse(map);
+//    assertThat(read, equalTo(map));
+//  }
 }

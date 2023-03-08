@@ -40,35 +40,40 @@ public class AirlineRestClient
       this.http = http;
     }
 
-  /**
-   * Returns all dictionary entries from the server
-   */
-  public Map<String, String> getAllDictionaryEntries() throws IOException, ParserException {
-    Response response = http.get(Map.of());
-    throwExceptionIfNotOkayHttpStatus(response);
-
-    TextParser parser = new TextParser(new StringReader(response.getContent()));
-    return parser.parse();
-  }
+//  /**
+//   * Returns all dictionary entries from the server
+//   */
+//  public Map<String, String> getAllAirlines() throws IOException, ParserException {
+//    Response response = http.get(Map.of());
+//    throwExceptionIfNotOkayHttpStatus(response);
+//
+//    TextParser parser = new TextParser(new StringReader(response.getContent()));
+//    return parser.parse();
+//  }
 
   /**
    * Returns the definition for the given word
    */
-  public String getDefinition(String word) throws IOException, ParserException {
-    Response response = http.get(Map.of(AirlineServlet.AIRLINE_NAME_PARAMETER, word));
+  public Airline getAirline(String airlineName) throws IOException, ParserException {
+    Response response = http.get(Map.of(AirlineServlet.AIRLINE_NAME_PARAMETER, airlineName));
     throwExceptionIfNotOkayHttpStatus(response);
     String content = response.getContent();
 
     TextParser parser = new TextParser(new StringReader(content));
-    return parser.parse().get(word);
+    return parser.parse();
   }
 
-  public void addDictionaryEntry(String word, String definition) throws IOException {
-    Response response = http.post(Map.of(AirlineServlet.AIRLINE_NAME_PARAMETER, word, AirlineServlet.FLIGHT_NUMBER_PARAMETER, definition));
+  public void addFlight(String airlineName, String flightNumber, String src, String depart, String dest, String arrive) throws IOException {
+    Response response = http.post(Map.of(AirlineServlet.AIRLINE_NAME_PARAMETER, airlineName,
+            AirlineServlet.FLIGHT_NUMBER_PARAMETER, flightNumber,
+            AirlineServlet.SRC_PARAMETER, src,
+            AirlineServlet.DEPART_PARAMETER, depart,
+            AirlineServlet.DEST_PARAMETER, dest,
+            AirlineServlet.ARRIVE_PARAMETER, arrive));
     throwExceptionIfNotOkayHttpStatus(response);
   }
 
-  public void removeAllDictionaryEntries() throws IOException {
+  public void removeAllAirlines() throws IOException {
     Response response = http.delete(Map.of());
     throwExceptionIfNotOkayHttpStatus(response);
   }
