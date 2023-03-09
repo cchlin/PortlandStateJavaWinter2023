@@ -59,7 +59,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>edu.pdx.cs410J.chlin.Project4</mainClass>
+              <mainClass>edu.pdx.cs410J.chlin.Project5</mainClass>
             </manifest>
           </archive>
         </configuration>
