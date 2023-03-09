@@ -34,12 +34,12 @@ class AirlineRestClientIT {
     client.removeAllAirlines();
   }
 
-  @Test
-  void test1EmptyServerContainsNoAirlines() throws IOException, ParserException {
+//  @Test
+//  void test1EmptyServerContainsNoAirlines() throws IOException, ParserException {
 //    AirlineRestClient client = newAirlineRestClient();
-//    Map<String, String> dictionary = client.getAllAirlines();
-//    assertThat(dictionary.size(), equalTo(0));
-  }
+//    Airline airline = client.getAllAirlines();
+//    assertThat(airline.size(), equalTo(0));
+//  }
 
   @Test
   void test2CreateFirstFlight() throws IOException, ParserException {
@@ -58,14 +58,35 @@ class AirlineRestClientIT {
     assertThat(airline.getFlights().iterator().next().getNumber(), equalTo(flightNumberInt));
   }
 
-//  @Test
-//  void test4EmptyWordThrowsException() {
-//    AirlineRestClient client = newAirlineRestClient();
-//    String emptyString = "";
-//
-//    HttpRequestHelper.RestException ex =
-//      assertThrows(HttpRequestHelper.RestException.class, () -> client.addFlight(emptyString, emptyString));
-//    assertThat(ex.getHttpStatusCode(), equalTo(HttpURLConnection.HTTP_PRECON_FAILED));
-//    assertThat(ex.getMessage(), equalTo(Messages.missingRequiredParameter(AirlineServlet.AIRLINE_NAME_PARAMETER)));
-//  }
+  @Test
+  void test4EmptyWordThrowsException() {
+    AirlineRestClient client = newAirlineRestClient();
+    String emptyString = "";
+
+    HttpRequestHelper.RestException ex =
+      assertThrows(HttpRequestHelper.RestException.class, () -> client.addFlight(emptyString, emptyString, emptyString, emptyString, emptyString, emptyString));
+    assertThat(ex.getHttpStatusCode(), equalTo(HttpURLConnection.HTTP_PRECON_FAILED));
+    assertThat(ex.getMessage(), equalTo(Messages.missingRequiredParameter(AirlineServlet.AIRLINE_NAME_PARAMETER)));
+  }
+
+  @Test
+  void test5GetFlightsMatchSrcAndDest() throws IOException, ParserException {
+    AirlineRestClient client = newAirlineRestClient();
+    String airlineName = "Airline";
+    int flightNumberInt = 123;
+    String flightNumber = "123";
+    String src = "SEA";
+    String depart = "3/7/2023 10:36 AM";
+    String dest = "PDX";
+    String arrive = "3/7/2023 11:39 AM";
+    client.addFlight(airlineName, flightNumber, src, depart, dest, arrive);
+    client.addFlight(airlineName, "456", "NRT", depart, "TPE", arrive);
+    client.addFlight(airlineName, "789", src, depart, dest, arrive);
+
+    Airline airline = client.getAirlineWithSrcAndDest(airlineName, src, dest);
+    airline.getFlights().forEach(flight -> {
+      assertThat(flight.getSource(), equalTo(src));
+      assertThat(flight.getDestination(), equalTo(dest));
+    });
+  }
 }

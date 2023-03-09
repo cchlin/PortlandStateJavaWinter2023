@@ -5,6 +5,7 @@ import edu.pdx.cs410J.web.HttpRequestHelper;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Map;
 
@@ -23,7 +24,6 @@ public class AirlineRestClientTest {
   void getAllDictionaryEntriesPerformsHttpGetWithNoParameters() throws ParserException, IOException {
     String airlineName = "Airline";
     int flightNumberInt = 123;
-    String flightNumber = "123";
     String src = "SEA";
     String depart = "3/7/2023 10:36 AM";
     String dest = "PDX";
@@ -41,10 +41,13 @@ public class AirlineRestClientTest {
     assertThat(read.getFlights().iterator().next().getNumber(), equalTo(flightNumberInt));
   }
 
-  private HttpRequestHelper.Response airlineAsText(Airline airline) {
+  private HttpRequestHelper.Response airlineAsText(Airline airline) throws IOException {
     StringWriter writer = new StringWriter();
-    new TextDumper(writer).dump(airline);
+    XmlDumper dumper = new XmlDumper(writer);
+    dumper.dump(airline);
 
     return new HttpRequestHelper.Response(writer.toString());
   }
+
+
 }

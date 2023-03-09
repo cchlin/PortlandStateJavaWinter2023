@@ -4,8 +4,8 @@ import com.google.common.annotations.VisibleForTesting;
 import edu.pdx.cs410J.ParserException;
 import edu.pdx.cs410J.web.HttpRequestHelper;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.Map;
 
 import static edu.pdx.cs410J.web.HttpRequestHelper.Response;
@@ -43,24 +43,44 @@ public class AirlineRestClient
 //  /**
 //   * Returns all dictionary entries from the server
 //   */
-//  public Map<String, String> getAllAirlines() throws IOException, ParserException {
+//  public Airline getAllAirlines() throws IOException, ParserException {
 //    Response response = http.get(Map.of());
 //    throwExceptionIfNotOkayHttpStatus(response);
 //
-//    TextParser parser = new TextParser(new StringReader(response.getContent()));
-//    return parser.parse();
+//
+//    return new XmlParser(new ByteArrayInputStream(response.getContent().getBytes())).parse();
 //  }
 
   /**
-   * Returns the definition for the given word
+   * Returns the airline for the given airline name
    */
   public Airline getAirline(String airlineName) throws IOException, ParserException {
     Response response = http.get(Map.of(AirlineServlet.AIRLINE_NAME_PARAMETER, airlineName));
     throwExceptionIfNotOkayHttpStatus(response);
     String content = response.getContent();
 
-    TextParser parser = new TextParser(new StringReader(content));
-    return parser.parse();
+
+    return new XmlParser(new ByteArrayInputStream(content.getBytes())).parse();
+  }
+
+    /**
+     * Return the flights that match the source and destination passed in in the
+     * specified airline
+     * @param airlineName airline name
+     * @param src source airport code
+     * @param dest destination airport code
+     * @return airline with the flights match the requirement
+     * @throws IOException when http.get has problem open url connection
+     * @throws ParserException when parsing from xml
+     */
+  public Airline getAirlineWithSrcAndDest(String airlineName, String src, String dest) throws IOException, ParserException {
+      Response response = http.get(Map.of(AirlineServlet.AIRLINE_NAME_PARAMETER, airlineName,
+              AirlineServlet.SRC_PARAMETER, src,
+              AirlineServlet.DEST_PARAMETER, dest));
+      throwExceptionIfNotOkayHttpStatus(response);
+      String content = response.getContent();
+
+      return new XmlParser(new ByteArrayInputStream(content.getBytes())).parse();
   }
 
   public void addFlight(String airlineName, String flightNumber, String src, String depart, String dest, String arrive) throws IOException {

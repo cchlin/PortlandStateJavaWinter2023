@@ -2,13 +2,11 @@ package edu.pdx.cs410J.chlin;
 
 import com.google.common.annotations.VisibleForTesting;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,10 +42,14 @@ public class AirlineServlet extends HttpServlet {
       String src = getParameter(SRC_PARAMETER, request);
       String dest = getParameter(DEST_PARAMETER, request);
 
-      if (src != null && dest != null) {
-          getFlightsWithSrcAndDest(airlineName, src, dest, response);
+      Airline airline = getAirline(airlineName);
+      if (airline == null) {
+          response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      }
+      else if (src != null && dest != null) {
+          getFlightsWithSrcAndDest(airline, src, dest, response);
       } else {
-          writeAllDictionaryEntries(response);
+          getAllFlightsFromAirline(airline, response);
       }
   }
 
@@ -107,10 +109,11 @@ public class AirlineServlet extends HttpServlet {
       Airline airline = this.airlines.get(airlineName);
       if (airline == null) {
           airline = new Airline(airlineName);
+          this.airlines.put(airlineName, airline);
       }
 
       airline.addFlight(new Flight(flightNumber, src, depart, dest, arrive));
-      this.airlines.put(airlineName, airline);
+
 
 //      PrintWriter pw = response.getWriter();
 //      pw.println(Messages.addFlightMessage(airlineName, flightNumberAsString, src, depart, dest, arrive));
@@ -155,9 +158,8 @@ public class AirlineServlet extends HttpServlet {
    *
    * The text of the message is formatted with {@link TextDumper}
    */
-  private void getFlightsWithSrcAndDest(String airlineName, String src, String dest, HttpServletResponse response) throws IOException {
-    Airline airline = this.airlines.get(airlineName);
-    Airline airlineToReturn = new Airline(airlineName);
+  private void getFlightsWithSrcAndDest(Airline airline, String src, String dest, HttpServletResponse response) throws IOException {
+    Airline airlineToReturn = new Airline(airline.getName());
 
     if (airline == null) {
       response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -172,10 +174,8 @@ public class AirlineServlet extends HttpServlet {
                 airlineToReturn.addFlight(new Flight(flight));
             }
         }
-        PrintWriter pw = response.getWriter();
-        XmlDumper dumper = new XmlDumper(pw);
-        dumper.dump(airlineToReturn);
-        pw.flush();
+
+        new XmlDumper(new PrintWriter(response.getWriter(), true)).dump(airlineToReturn);
 
       response.setStatus(HttpServletResponse.SC_OK);
     }
@@ -186,11 +186,11 @@ public class AirlineServlet extends HttpServlet {
    *
    * The text of the message is formatted with {@link TextDumper}
    */
-  private void writeAllDictionaryEntries(HttpServletResponse response ) throws IOException
+  private void getAllFlightsFromAirline(Airline airline, HttpServletResponse response ) throws IOException
   {
-      PrintWriter pw = response.getWriter();
-//      TextDumper dumper = new TextDumper(pw);
-//      dumper.dump(airlines);
+      Airline airlineToReturn = airlines.get(airline.getName());
+
+      new XmlDumper(new PrintWriter(response.getWriter(), true)).dump(airlineToReturn);
 
       response.setStatus( HttpServletResponse.SC_OK );
   }
@@ -216,3 +216,5 @@ public class AirlineServlet extends HttpServlet {
       return this.airlines.get(airlineName);
   }
 }
+
+

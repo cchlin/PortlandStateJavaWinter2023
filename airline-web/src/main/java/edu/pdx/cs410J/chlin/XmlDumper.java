@@ -20,15 +20,9 @@ import java.util.Date;
 
 public class XmlDumper implements AirlineDumper<Airline> {
 
-    private String SYSTEM_ID = AirlineXmlHelper.SYSTEM_ID;
-    private String PUBLIC_ID = AirlineXmlHelper.PUBLIC_ID;
+    private AirlineXmlHelper helper = new AirlineXmlHelper();
     private Document document;
-    private Writer writer;
-
-    public XmlDumper() {
-        createDocument();
-        this.writer= null;
-    }
+    private final Writer writer;
 
     /**
      * the constructor of the XmlDumper
@@ -39,6 +33,8 @@ public class XmlDumper implements AirlineDumper<Airline> {
         this.writer = writer;
     }
 
+
+
     /**
      * The method that writes the xml file
      * @param airline the airline that is to dump
@@ -47,20 +43,21 @@ public class XmlDumper implements AirlineDumper<Airline> {
     @Override
     public void dump(Airline airline) throws IOException {
 
-//        try {
             createDOMTree(airline);
-//        } catch (IOException ex) {
-//            throw new IOException("** empty flights");
-//        }
 
         try {
             Source src = new DOMSource(document);
-            Result res = new StreamResult(writer);
+            Result res = new StreamResult(this.writer);
 
             TransformerFactory xFactory = TransformerFactory.newInstance();
             Transformer xform = xFactory.newTransformer();
             xform.setOutputProperty(OutputKeys.INDENT, "yes");
-            xform.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, SYSTEM_ID);
+            xform.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, helper.SYSTEM_ID);
+            xform.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, helper.PUBLIC_ID);
+
+            xform.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+
+            xform.setOutputProperty(OutputKeys.ENCODING, "ASCII");
             xform.transform(src, res);
         } catch (TransformerConfigurationException ex) {
             System.out.println("** An error occurred while configuring the transformer for writing the DOM tree to output");
@@ -69,6 +66,8 @@ public class XmlDumper implements AirlineDumper<Airline> {
 //            System.out.println(ex);
             ex.printStackTrace();
         }
+
+
 
     }
 
@@ -150,12 +149,6 @@ public class XmlDumper implements AirlineDumper<Airline> {
                 root.appendChild(flight);
             }
         }
-//        } else {
-//            throw new IOException("Empty flights");
-//        }
-
-
-//        return document;
     }
 
     /**
@@ -164,19 +157,20 @@ public class XmlDumper implements AirlineDumper<Airline> {
      * @return a document that is to output
      */
     private void createDocument() {
-        document = null;
+        this.document = null;
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setValidating(true);
 
             DocumentBuilder builder = factory.newDocumentBuilder();
+            builder.setErrorHandler(helper);
+            builder.setEntityResolver(helper);
 
             DOMImplementation dom = builder.getDOMImplementation();
-            DocumentType docType = dom.createDocumentType("airline", PUBLIC_ID, SYSTEM_ID);
+            DocumentType docType = dom.createDocumentType("airline", helper.PUBLIC_ID, helper.SYSTEM_ID);
             document = dom.createDocument(null, "airline", docType);
         } catch (ParserConfigurationException ex) {
             System.out.println("An error occurred while initializing the DocumentBuilder");
         }
-
     }
 }
