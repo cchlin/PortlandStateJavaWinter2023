@@ -23,7 +23,7 @@ class AirlineRestClientIT {
   private static final String HOSTNAME = "localhost";
   private static final String PORT = System.getProperty("http.port", "8080");
 
-  private AirlineRestClient newAirlineRestClient() {
+  private AirlineRestClient newAirlineRestClient() throws IOException {
     int port = Integer.parseInt(PORT);
     return new AirlineRestClient(HOSTNAME, port);
   }
@@ -59,7 +59,7 @@ class AirlineRestClientIT {
   }
 
   @Test
-  void test4EmptyWordThrowsException() {
+  void test4EmptyWordThrowsException() throws IOException {
     AirlineRestClient client = newAirlineRestClient();
     String emptyString = "";
 

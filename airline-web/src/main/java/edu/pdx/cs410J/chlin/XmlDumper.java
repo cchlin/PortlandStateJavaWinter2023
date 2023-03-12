@@ -148,6 +148,8 @@ public class XmlDumper implements AirlineDumper<Airline> {
 
                 root.appendChild(flight);
             }
+        } else {
+            throw new IOException("Empty flights");
         }
     }
 

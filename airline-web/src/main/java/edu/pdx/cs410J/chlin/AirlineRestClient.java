@@ -37,7 +37,7 @@ public class AirlineRestClient
 
     @VisibleForTesting
     AirlineRestClient(HttpRequestHelper http) {
-      this.http = http;
+        this.http = http;
     }
 
 //  /**

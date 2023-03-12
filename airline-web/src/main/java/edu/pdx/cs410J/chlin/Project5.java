@@ -2,8 +2,10 @@ package edu.pdx.cs410J.chlin;
 
 import com.google.common.annotations.VisibleForTesting;
 import edu.pdx.cs410J.ParserException;
+import edu.pdx.cs410J.web.HttpRequestHelper;
 
 import java.io.*;
+import java.net.ConnectException;
 import java.util.ArrayList;
 
 /**
@@ -332,7 +334,7 @@ public class Project5 {
       return;
     }
 
-    AirlineRestClient client = new AirlineRestClient(hostName, port);
+      AirlineRestClient client = new AirlineRestClient(hostName, port);
 
 
     // message to user
@@ -364,11 +366,16 @@ public class Project5 {
         try {
           airline = client.getAirlineWithSrcAndDest(airlineName, src, dest);
         } catch (ParserException ex) {
-          System.err.println("** problem occur when getting flights with specific route from server");
+          System.err.println("** problem occur when parsing flights with specific route from server");
+          return;
+        } catch (HttpRequestHelper.RestException ex) {
+          System.err.println("** Unable to retrieve the data from the server. The airline might not exist");
           return;
         }
       }
-      prettyPrint(airline);
+      if (airline != null) {
+        prettyPrint(airline);
+      }
 
       // when -search is not entered, add flight
     } else {
@@ -416,7 +423,12 @@ public class Project5 {
       }
 
       // add flight to server
-      client.addFlight(airlineName, flightNumberString, src, depart, dest, arrive);
+      try {
+        client.addFlight(airlineName, flightNumberString, src, depart, dest, arrive);
+      } catch (ConnectException ex) {
+        System.err.println("** Unable to connect to server to add flight");
+        return;
+      }
 
     }
   }
