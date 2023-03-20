@@ -30,8 +30,20 @@ public class MainActivity extends AppCompatActivity {
         String leftOperandString = leftOperandEditText.getText().toString();
         String rightOperandString = rightOperandEditText.getText().toString();
 
-        int leftOperand = Integer.parseInt(leftOperandString);
-        int rightOperand = Integer.parseInt(rightOperandString);
+        int leftOperand;
+        try {
+            leftOperand = Integer.parseInt(leftOperandString);
+        } catch (NumberFormatException ex) {
+            Toast.makeText(this, "Invalid Number: " + leftOperandString, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        int rightOperand;
+        try {
+            rightOperand = Integer.parseInt(rightOperandString);
+        } catch (NumberFormatException ex) {
+            Toast.makeText(this, "Invalid Number: " + rightOperandString, Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         int sum = leftOperand + rightOperand;
 
