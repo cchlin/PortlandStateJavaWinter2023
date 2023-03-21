@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Airline</string>
+    <string name="app_name">Airline-android-example</string>
     <string name="hello">Hello</string>
     <string name="launch_calculator">Launch</string>
     <string name="plus">+</string>
