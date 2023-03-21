@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Airline</string>
+    <string name="hello">Hello</string>
+    <string name="launch_calculator">Launch</string>
+    <string name="plus">+</string>
+    <string name="return_to_main">Return to Main</string>
+    <string name="equal">=</string>
+</resources>
