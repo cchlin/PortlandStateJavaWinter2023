@@ -7,7 +7,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "edu.pdx.cs410j.chlin"
+        applicationId 'edu.pdx.cs410J.chlin'
         minSdk 33
         targetSdk 33
         versionCode 1

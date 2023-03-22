@@ -1,8 +1,9 @@
-package edu.pdx.cs410J.chlin;
+package edu.pdx.cs410j.chlin;
 
 import edu.pdx.cs410J.AbstractFlight;
 import edu.pdx.cs410J.AirportNames;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,7 +13,7 @@ import java.util.Date;
  * Flight class that has flight number, departure airport code, departure date and time
  * destination airport code, and arrival date and time
  */
-public class Flight extends AbstractFlight implements Comparable<Flight> {
+public class Flight extends AbstractFlight implements Comparable<Flight>, Serializable {
 
   /**
    * Flight number of this flight object

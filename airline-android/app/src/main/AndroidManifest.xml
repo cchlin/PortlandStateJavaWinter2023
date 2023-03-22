@@ -12,6 +12,21 @@
         android:theme="@style/Theme.Airline"
         tools:targetApi="31">
         <activity
+            android:name=".readMeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".searchFlightsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".searchAirline"
+            android:exported="false" />
+        <activity
+            android:name=".SelectTimeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".addFlightActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

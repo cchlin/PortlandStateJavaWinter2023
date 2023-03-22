@@ -1,4 +1,4 @@
-package edu.pdx.cs410J.chlin;
+package edu.pdx.cs410j.chlin;
 
 import edu.pdx.cs410J.AbstractAirline;
 

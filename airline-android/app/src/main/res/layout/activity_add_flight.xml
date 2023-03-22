@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".addFlightActivity">
+
+    <TextView
+        android:id="@+id/select_time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_flight"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.08" />
+
+    <LinearLayout
+        android:id="@+id/select_time_form"
+        android:layout_width="358dp"
+        android:layout_height="398dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/select_time_text"
+        app:layout_constraintVertical_bias="0.15">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingVertical="2dp">
+
+            <TableRow
+                android:id="@+id/add_flight_airline_row"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_border">
+
+                <TextView
+                    android:id="@+id/add_flight_airline_row_text"
+                    android:layout_width="122dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/airline"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/add_flight_airline_row_input"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/airline_name"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    android:textSize="14sp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/add_flight_flightNum_row"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_border">
+
+                <TextView
+                    android:id="@+id/add_flight_flightNum_row_text"
+                    android:layout_width="89dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/flight_number"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/add_flight_flightNum_row_input"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/flight_number"
+                    android:inputType="numberSigned"
+                    android:minHeight="48dp"
+                    android:textSize="14sp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/add_flight_src_row"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_border">
+
+                <TextView
+                    android:id="@+id/add_flight_src_row_text"
+                    android:layout_width="89dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/from"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/add_flight_src_row_input"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/departure_airport"
+                    android:minHeight="48dp"
+                    android:textSize="14sp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/add_flight_depar_row"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_border">
+
+                <TextView
+                    android:id="@+id/add_flight_depart_row_text"
+                    android:layout_width="89dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/departure_time"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/add_flight_depart_row_input"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/select_time"
+                    android:minHeight="48dp"
+                    android:onClick="setSelectDepartTime"
+                    android:textSize="14sp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/add_flight_dest_row"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_border">
+
+                <TextView
+                    android:id="@+id/add_flight_dest_row_text"
+                    android:layout_width="89dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/to"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/add_flight_dest_row_input"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/departure_airport"
+                    android:minHeight="48dp"
+                    android:textSize="14sp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/add_flight_arrive_row"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_border">
+
+                <TextView
+                    android:id="@+id/add_flight_arrive_row_text"
+                    android:layout_width="89dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/arrival_time"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/add_flight_arrive_row_input"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/select_time"
+                    android:minHeight="48dp"
+                    android:onClick="setSelectArriveTime"
+                    android:textSize="14sp" />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/add_flight_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="addFlightButtonOnClick"
+        android:text="@string/add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/select_time_form"
+        app:layout_constraintVertical_bias="0.17" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
